@@ -18,7 +18,7 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_message = update.message.text
 
     response = client.responses.create(
-        model="gpt-5.1-mini",
+        model="model="gpt-4.1",
         input=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
