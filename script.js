@@ -1,21 +1,28 @@
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById("userInput");
     const chatBox = document.getElementById("chatBox");
 
-    if (input.value.trim() === "") return;
+    const message = input.value.trim();
+    if (!message) return;
 
-    chatBox.innerHTML += `
-        <div class="message user">
-            ${input.value}
-        </div>
-    `;
-
-    chatBox.innerHTML += `
-        <div class="message bot">
-            I'm Ethio AI. Backend hin qabu amma.
-        </div>
-    `;
-
+    chatBox.innerHTML += `<div class="message user">${message}</div>`;
     input.value = "";
+
+    try {
+        const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+
+        chatBox.innerHTML += `<div class="message bot">${data.reply}</div>`;
+    } catch (err) {
+        chatBox.innerHTML += `<div class="message bot">❌ Error!</div>`;
+    }
+
     chatBox.scrollTop = chatBox.scrollHeight;
 }
