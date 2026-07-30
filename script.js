@@ -1,44 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ethio AI</title>
-<link rel="stylesheet" href="style.css">
-</head>
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
 
-<body>
+    if (input.value.trim() === "") return;
 
-<div class="container">
-
-    <header>
-        <h1>Ethio AI</h1>
-    </header>
-
-    <div id="chatBox">
-
-        <div class="bot message">
-            👋 Hello! Welcome to Ethio AI.
+    chatBox.innerHTML += `
+        <div class="message user">
+            ${input.value}
         </div>
+    `;
 
-        <div class="bot message">
-            How can I help you today?
+    chatBox.innerHTML += `
+        <div class="message bot">
+            I'm Ethio AI. Backend hin qabu amma.
         </div>
+    `;
 
-    </div>
-
-    <div class="input-area">
-        <input
-            type="text"
-            id="userInput"
-            placeholder="Ask anything..."
-        >
-        <button onclick="sendMessage()">Send</button>
-    </div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
