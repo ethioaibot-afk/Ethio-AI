@@ -1,7 +1,7 @@
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 export default async function handler(req, res) {
@@ -12,19 +12,18 @@ export default async function handler(req, res) {
   try {
     const { message } = req.body;
 
-    const response = await openai.responses.create({
-      model: "gpt-5.5",
-      input: message
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: message,
     });
 
     res.status(200).json({
-      reply: response.output_text
+      reply: response.text,
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      reply: "❌ Error yeroo AI wajjin wal qunnamtii uumamu."
+      reply: "❌ Error yeroo Gemini wajjin wal qunnamtii uumamu.",
     });
   }
 }
